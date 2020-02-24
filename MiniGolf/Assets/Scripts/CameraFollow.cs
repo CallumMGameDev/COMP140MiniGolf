@@ -5,8 +5,6 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField]
-    private float zoomSpeed;
-    [SerializeField]
     private GameObject targetObj;
     [SerializeField]
     private float rotationSpeed;
@@ -36,7 +34,6 @@ public class CameraFollow : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             transform.RotateAround(target.position, target.forward, Time.deltaTime * rotationSpeed);
-            //this.transform.rotation = Quaternion.Euler(this.transform.rotation.x, this.transform.rotation.y, 0f);
         }
         if (Input.GetKey(KeyCode.S))
         {
