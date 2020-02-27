@@ -4,40 +4,31 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject targetObj;
-    [SerializeField]
-    private float rotationSpeed;
-    private Transform target;
+    public Transform lookAt;
 
-    // Start is called before the first frame update
-    void Start()
+    private Vector3 currentMouse;
+    private Vector3 cursorDirection;
+    public float sensitivity = 3f;
+    public float distance = 5f;
+
+    private void Update()
     {
-        target = targetObj.transform;
-        transform.LookAt(target);
-    }
+        if (Input.GetButton("Fire2"))
+        {
+            if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+            {
+                currentMouse.x += Input.GetAxis("Mouse X") * sensitivity;
+                currentMouse.y -= Input.GetAxis("Mouse Y") * sensitivity;
 
-    // Update is called once per frame
-    void Update()
-    {
+                cursorDirection = lookAt.position - transform.position;
 
-        //Zoom in and Zoom Out
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.RotateAround(target.position, target.up, Time.deltaTime * rotationSpeed);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.RotateAround(target.position, -target.up, Time.deltaTime * rotationSpeed);
+                currentMouse.y = Mathf.Clamp(currentMouse.y, 0f, 90f);
 
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.RotateAround(target.position, target.forward, Time.deltaTime * rotationSpeed);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.RotateAround(target.position, -target.forward, Time.deltaTime * rotationSpeed);
+                Quaternion rotation = Quaternion.Euler(currentMouse.y, currentMouse.x, 0);
+
+                transform.position = lookAt.position - rotation * (Vector3.forward * distance);
+                transform.rotation = rotation;
+            }
         }
     }
 }
