@@ -10,6 +10,7 @@ public class CameraFollow : MonoBehaviour
     private Vector3 cursorDirection;
     public float sensitivity = 3f;
     public float distance = 5f;
+    public Quaternion rotation;
 
     private void Update()
     {
@@ -24,11 +25,10 @@ public class CameraFollow : MonoBehaviour
 
                 currentMouse.y = Mathf.Clamp(currentMouse.y, 0f, 90f);
 
-                Quaternion rotation = Quaternion.Euler(currentMouse.y, currentMouse.x, 0);
-
-                transform.position = lookAt.position - rotation * (Vector3.forward * distance);
-                transform.rotation = rotation;
+                rotation = Quaternion.Euler(currentMouse.y, currentMouse.x, 0);
             }
         }
+        transform.position = lookAt.position - rotation * (Vector3.forward * distance);
+        transform.rotation = rotation;
     }
 }
