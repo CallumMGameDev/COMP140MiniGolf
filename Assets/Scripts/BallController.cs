@@ -5,6 +5,14 @@ using UnityEngine.UI;
 
 public class BallController : MonoBehaviour
 {
+    private enum ballState
+    {
+        Stationary,
+        Hit,
+    }
+
+    
+
     private Rigidbody rb;
     private Vector3 playerCam;
     [SerializeField]
@@ -20,6 +28,7 @@ public class BallController : MonoBehaviour
     private float addForce;
     [SerializeField]
     private Slider forceSlider;
+    private ballState state;
 
 
     private void Start()
@@ -30,6 +39,20 @@ public class BallController : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
     }
     private void Update()
+    {
+        switch (state)
+        {
+            default:
+            case ballState.Stationary:
+                StationaryBall();
+                break;
+            case ballState.Hit:
+                break;
+        }
+    }
+
+
+    private void StationaryBall()
     {
         playerCam = Camera.main.transform.forward;
         direction = new Vector3(playerCam.x, 0, playerCam.z);
@@ -42,6 +65,7 @@ public class BallController : MonoBehaviour
         {
             rb.AddRelativeForce(direction * force);
             force = minForce;
+            state = ballState.Hit;
         }
     }
 
