@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BallController : MonoBehaviour
 {
@@ -17,9 +18,14 @@ public class BallController : MonoBehaviour
     private float minForce;
     [SerializeField]
     private float addForce;
+    [SerializeField]
+    private Slider forceSlider;
+
 
     private void Start()
     {
+        forceSlider.maxValue = maxForce;
+        forceSlider.minValue = minForce;
         force = minForce;
         rb = this.GetComponent<Rigidbody>();
     }
@@ -30,6 +36,7 @@ public class BallController : MonoBehaviour
         if (Input.GetButton("Fire1"))
         {
             IncreaseForce();
+            forceSlider.value = force;
         }
         else if (Input.GetButtonUp("Fire1"))
         {
