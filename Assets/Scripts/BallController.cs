@@ -28,6 +28,7 @@ public class BallController : MonoBehaviour
     private float addForce;
     [SerializeField]
     private Slider forceSlider;
+    [SerializeField]
     private ballState state;
 
 
@@ -47,6 +48,7 @@ public class BallController : MonoBehaviour
                 StationaryBall();
                 break;
             case ballState.Hit:
+                BallHit();
                 break;
         }
     }
@@ -78,6 +80,14 @@ public class BallController : MonoBehaviour
         else if (force > maxForce)
         {
             force = minForce;
+        }
+    }
+
+    private void BallHit()
+    {
+        if(rb.velocity == Vector3.zero)
+        {
+            state = ballState.Stationary;
         }
     }
 }
