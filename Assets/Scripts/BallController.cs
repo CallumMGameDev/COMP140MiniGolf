@@ -38,6 +38,7 @@ public class BallController : MonoBehaviour
         forceSlider.minValue = minForce;
         force = minForce;
         rb = this.GetComponent<Rigidbody>();
+        state = ballState.Stationary;
     }
     private void Update()
     {
