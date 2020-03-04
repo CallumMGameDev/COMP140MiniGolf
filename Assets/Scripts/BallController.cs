@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BallController : MonoBehaviour
 {
@@ -29,7 +28,12 @@ public class BallController : MonoBehaviour
     [SerializeField]
     private Slider forceSlider;
     [SerializeField]
+    private TextMeshProUGUI stokeCount;
+
+    [SerializeField]
     private ballState state;
+    public int strokes;
+    private bool addStroke = true;
 
 
     private void Start()
@@ -39,6 +43,7 @@ public class BallController : MonoBehaviour
         force = minForce;
         rb = this.GetComponent<Rigidbody>();
         state = ballState.Stationary;
+        stokeCount.SetText("Strokes " + strokes);
     }
     private void Update()
     {
@@ -59,6 +64,7 @@ public class BallController : MonoBehaviour
     {
         playerCam = Camera.main.transform.forward;
         direction = new Vector3(playerCam.x, 0, playerCam.z);
+        addStroke = true;
         if (Input.GetButton("Fire1"))
         {
             IncreaseForce();
@@ -86,7 +92,13 @@ public class BallController : MonoBehaviour
 
     private void BallHit()
     {
-        if(rb.velocity == Vector3.zero)
+        if (addStroke == true)
+        {
+            strokes++;
+            stokeCount.SetText("Strokes " + strokes);
+            addStroke = false;
+        }
+        if (rb.velocity == Vector3.zero)
         {
             state = ballState.Stationary;
         }

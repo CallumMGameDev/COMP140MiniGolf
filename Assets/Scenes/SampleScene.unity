@@ -239,6 +239,9 @@ MonoBehaviour:
   minForce: 500
   addForce: 500
   forceSlider: {fileID: 665152042}
+  stokeCount: {fileID: 757293965}
+  state: 0
+  strokes: 0
 --- !u!1 &86990662
 GameObject:
   m_ObjectHideFlags: 0
