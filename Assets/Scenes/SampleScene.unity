@@ -216,7 +216,9 @@ GameObject:
   - component: {fileID: 74877446}
   - component: {fileID: 74877445}
   - component: {fileID: 74877449}
+  - component: {fileID: 74877452}
   - component: {fileID: 74877450}
+  - component: {fileID: 74877451}
   m_Layer: 10
   m_Name: Ball
   m_TagString: Untagged
@@ -333,6 +335,40 @@ MonoBehaviour:
   stokeCount: {fileID: 757293965}
   state: 0
   strokes: 0
+--- !u!114 &74877451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74877444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 334b4433b5182ee469504024f3448b12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: 0, y: 0, z: 0}
+  force: 0
+  maxForce: 1500
+  minForce: 250
+  addForce: 250
+  forceSlider: {fileID: 665152042}
+  stokeCount: {fileID: 757293965}
+  state: 0
+  strokes: 0
+--- !u!114 &74877452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74877444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e345e8c8ad9e3346ba826b13ce79b19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControllerEnabled: 1
 --- !u!1 &86990662
 GameObject:
   m_ObjectHideFlags: 0
