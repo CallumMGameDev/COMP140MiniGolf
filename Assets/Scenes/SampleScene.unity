@@ -347,12 +347,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 334b4433b5182ee469504024f3448b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 74877444}
-  acc_normalizer_factor: 0.00025
-  gyro_normalizer_factor: 0.000030517578
-  factor: 7
-  enableRotation: 1
-  enableTranslation: 1
+  xAccelOffset: 0
+  yAccelOffset: 0
+  zAccelOffset: 0
+  xGyroOffset: 0
+  yGyroOffset: 0
+  zGyroOffset: 0
 --- !u!114 &74877452
 MonoBehaviour:
   m_ObjectHideFlags: 0
