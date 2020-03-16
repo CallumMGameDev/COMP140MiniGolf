@@ -35,7 +35,7 @@ public abstract class BallController : MonoBehaviour
     protected bool addStroke = true;
 
 
-    protected void Start()
+    protected virtual void Start()
     {
         forceSlider.maxValue = maxForce;
         forceSlider.minValue = minForce;
@@ -44,7 +44,7 @@ public abstract class BallController : MonoBehaviour
         state = ballState.Stationary;
         stokeCount.SetText("Strokes " + strokes);
     }
-    protected void Update()
+    protected  virtual void Update()
     {
         switch (state)
         {

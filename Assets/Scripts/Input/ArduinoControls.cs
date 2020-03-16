@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 
 
-public class ArduinoControls : MonoBehaviour
+public class ArduinoControls : BallController
 {
     private SerialPort serialPort;
     [SerializeField]
@@ -32,7 +32,7 @@ public class ArduinoControls : MonoBehaviour
     private string[] neededValues;
     private int length;
     private int[] asInt;
-    private void Start()
+    protected override void Start()
     {
         serialPort = new SerialPort("COM3", 115200);
         serialPort.Open();
@@ -43,9 +43,18 @@ public class ArduinoControls : MonoBehaviour
 
         serialPort.ReadTimeout = 20;
 
+        forceSlider.maxValue = maxForce;
+        forceSlider.minValue = minForce;
+        force = minForce;
+        rb = this.GetComponent<Rigidbody>();
+        state = ballState.Stationary;
+        stokeCount.SetText("Strokes " + strokes);
     }
-    private void Update()
+    protected override void StationaryBall()
     {
+        playerCam = Camera.main.transform.forward;
+        direction = new Vector3(playerCam.x, 0, playerCam.z);
+
         serialRead = serialPort.ReadLine();
         neededValues = serialRead.Split();
         length = neededValues.Length;
@@ -78,6 +87,12 @@ public class ArduinoControls : MonoBehaviour
                 zGyro = result + zGyroOffset;
             }
         }
-        Debug.Log(xAccel + " " + yAccel + " " + zAccel + " " + xGyro + " " + yGyro + " " + zGyro);
+        
+        if (xAccel >= 500)
+        {
+            force = xAccel;
+            rb.AddRelativeForce(direction * force);
+            state = ballState.Hit;
+        }
     }
 }
