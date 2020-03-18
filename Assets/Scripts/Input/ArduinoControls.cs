@@ -53,7 +53,7 @@ public class ArduinoControls : BallController
     protected override void StationaryBall()
     {
         playerCam = Camera.main.transform.forward;
-        direction = new Vector3(playerCam.x, 0, playerCam.z);
+        //direction = new Vector3(playerCam.x, 0, playerCam.z);
 
         getArduinoValues();
         if (xAccel >= 500)
@@ -113,7 +113,10 @@ public class ArduinoControls : BallController
             }
             if (i == 3)
             {
-                xGyro = result + xGyroOffset;
+                if (result + xGyroOffset >= -50 || result + xGyroOffset <= 50)
+                {
+                    xGyro = 1;
+                } 
             }
             if (i == 4)
             {
@@ -121,9 +124,13 @@ public class ArduinoControls : BallController
             }
             if (i == 5)
             {
-                zGyro = result + zGyroOffset;
+                if (result + zGyroOffset >= -50 || result + zGyroOffset <= 50)
+                {
+                    zGyro = 0;
+                }
             }
         }
+        direction = new Vector3(xGyro, 0, zGyro);
         Debug.Log(xAccel + " " + yAccel + " " + zAccel + " " + xGyro + " " + yGyro + " " + zGyro);
     }
 }

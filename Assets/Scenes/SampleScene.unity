@@ -349,19 +349,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 0, z: 0}
   force: 0
-  maxForce: 0
+  maxForce: 2000
   minForce: 0
   addForce: 0
   forceSlider: {fileID: 665152042}
   stokeCount: {fileID: 757293965}
   state: 0
   strokes: 0
-  xAccelOffset: 0
-  yAccelOffset: 0
-  zAccelOffset: 0
-  xGyroOffset: 0
-  yGyroOffset: 0
-  zGyroOffset: 0
+  xAccelOffset: -2756
+  yAccelOffset: -292
+  zAccelOffset: 1440
+  xGyroOffset: 200
+  yGyroOffset: -156
+  zGyroOffset: 44
 --- !u!114 &74877452
 MonoBehaviour:
   m_ObjectHideFlags: 0
