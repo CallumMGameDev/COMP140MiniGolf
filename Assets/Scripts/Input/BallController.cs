@@ -69,7 +69,7 @@ public abstract class BallController : MonoBehaviour
 
     }
 
-    protected void BallHit()
+    protected virtual void BallHit()
     {
         if (addStroke == true)
         {

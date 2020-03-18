@@ -55,6 +55,43 @@ public class ArduinoControls : BallController
         playerCam = Camera.main.transform.forward;
         direction = new Vector3(playerCam.x, 0, playerCam.z);
 
+        getArduinoValues();
+        if (xAccel >= 500)
+        {
+            if (xAccel >= maxForce * 4)
+            {
+                force = maxForce;
+            }
+            else
+            {
+                force = xAccel / 4;
+            }
+                
+            rb.AddRelativeForce(direction * force);
+            state = ballState.Hit;
+        }
+    }
+
+    protected override void BallHit()
+    {
+        getArduinoValues();
+        if (addStroke == true)
+        {
+            strokes++;
+            stokeCount.SetText("Strokes " + strokes);
+            addStroke = false;
+        }
+        if (rb.velocity == Vector3.zero )
+        {
+            if (xAccel <= -500)
+            {
+                state = ballState.Stationary;
+            }
+        }
+    }
+
+    protected void getArduinoValues()
+    {
         serialRead = serialPort.ReadLine();
         neededValues = serialRead.Split();
         length = neededValues.Length;
@@ -87,12 +124,6 @@ public class ArduinoControls : BallController
                 zGyro = result + zGyroOffset;
             }
         }
-        
-        if (xAccel >= 500)
-        {
-            force = xAccel;
-            rb.AddRelativeForce(direction * force);
-            state = ballState.Hit;
-        }
+        Debug.Log(xAccel + " " + yAccel + " " + zAccel + " " + xGyro + " " + yGyro + " " + zGyro);
     }
 }
