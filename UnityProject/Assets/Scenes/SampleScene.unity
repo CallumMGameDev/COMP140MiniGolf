@@ -356,7 +356,7 @@ MonoBehaviour:
   stokeCount: {fileID: 757293965}
   state: 0
   strokes: 0
-  xAccelOffset: -2756
+  xAccelOffset: 0
   yAccelOffset: -292
   zAccelOffset: 1440
   xGyroOffset: 200
@@ -374,7 +374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e345e8c8ad9e3346ba826b13ce79b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ControllerEnabled: 1
+  controllerEnabled: 1
 --- !u!1 &86990662
 GameObject:
   m_ObjectHideFlags: 0
@@ -807,8 +807,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190335
+  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

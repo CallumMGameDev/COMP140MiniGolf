@@ -31,17 +31,16 @@ public class ArduinoControls : BallController
     private string serialRead;
     private string[] neededValues;
     private int length;
-    private int[] asInt;
     protected override void Start()
     {
-        serialPort = new SerialPort("COM3", 115200);
+        serialPort = new SerialPort("COM3", 38400);
         serialPort.Open();
         if (serialPort.IsOpen)
         {
             Debug.Log("Open");
         }
 
-        serialPort.ReadTimeout = 20;
+        serialPort.ReadTimeout = 55;
 
         forceSlider.maxValue = maxForce;
         forceSlider.minValue = minForce;
@@ -55,8 +54,7 @@ public class ArduinoControls : BallController
         playerCam = Camera.main.transform.forward;
         //direction = new Vector3(playerCam.x, 0, playerCam.z);
 
-        getArduinoValues();
-        if (xAccel >= 500)
+        if (xAccel >= 700)
         {
             if (xAccel >= maxForce * 4)
             {
@@ -74,7 +72,7 @@ public class ArduinoControls : BallController
 
     protected override void BallHit()
     {
-        getArduinoValues();
+        
         if (addStroke == true)
         {
             strokes++;
@@ -83,7 +81,7 @@ public class ArduinoControls : BallController
         }
         if (rb.velocity == Vector3.zero )
         {
-            if (xAccel <= -500)
+            if (xAccel <= -800)
             {
                 state = ballState.Stationary;
             }
@@ -113,10 +111,14 @@ public class ArduinoControls : BallController
             }
             if (i == 3)
             {
-                if (result + xGyroOffset >= -50 || result + xGyroOffset <= 50)
+                if (result + xGyroOffset >= -25 || result + xGyroOffset <= 25)
                 {
                     xGyro = 1;
-                } 
+                }
+                else
+                {
+                    xGyro = result;
+                }
             }
             if (i == 4)
             {
@@ -124,13 +126,22 @@ public class ArduinoControls : BallController
             }
             if (i == 5)
             {
-                if (result + zGyroOffset >= -50 || result + zGyroOffset <= 50)
+                if (result + zGyroOffset >= -25 || result + zGyroOffset <= 25)
                 {
                     zGyro = 0;
+                }
+                else
+                {
+                    zGyro = result;
                 }
             }
         }
         direction = new Vector3(xGyro, 0, zGyro);
         Debug.Log(xAccel + " " + yAccel + " " + zAccel + " " + xGyro + " " + yGyro + " " + zGyro);
+    }
+
+    private void FixedUpdate()
+    {
+        getArduinoValues();
     }
 }
