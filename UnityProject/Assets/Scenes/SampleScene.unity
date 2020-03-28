@@ -356,12 +356,13 @@ MonoBehaviour:
   stokeCount: {fileID: 757293965}
   state: 0
   strokes: 0
-  xAccelOffset: 0
-  yAccelOffset: -292
-  zAccelOffset: 1440
+  xAccelOffset: -1178
+  yAccelOffset: -454
+  zAccelOffset: 4226
   xGyroOffset: 200
   yGyroOffset: -156
   zGyroOffset: 44
+  arduinoForce: {x: 0, y: 0, z: 0}
 --- !u!114 &74877452
 MonoBehaviour:
   m_ObjectHideFlags: 0

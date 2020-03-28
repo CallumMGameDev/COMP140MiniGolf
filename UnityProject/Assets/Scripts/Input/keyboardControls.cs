@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class keyboardControlls : BallController
+public class keyboardControls : BallController
 {
     protected override void StationaryBall()
     {

@@ -11,7 +11,7 @@ public class BallManager : MonoBehaviour
     {
         if (controllerEnabled)
         {
-            this.GetComponent<keyboardControlls>().enabled = false;
+            this.GetComponent<keyboardControls>().enabled = false;
         }
         else if (!controllerEnabled)
         {

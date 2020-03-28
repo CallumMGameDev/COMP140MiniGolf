@@ -28,11 +28,18 @@ public class ArduinoControls : BallController
     private int yGyro;
     private int zGyro;
 
+    private float xForce;
+    private float zForce;
+    [SerializeField]
+    private Vector3 arduinoForce;
+    private Vector3 maxArduinoForce;
+
     private string serialRead;
     private string[] neededValues;
     private int length;
     protected override void Start()
     {
+        maxArduinoForce = new Vector3(maxForce, 0, 0);
         serialPort = new SerialPort("COM3", 38400);
         serialPort.Open();
         if (serialPort.IsOpen)
@@ -40,7 +47,7 @@ public class ArduinoControls : BallController
             Debug.Log("Open");
         }
 
-        serialPort.ReadTimeout = 55;
+        serialPort.ReadTimeout = 500;
 
         forceSlider.maxValue = maxForce;
         forceSlider.minValue = minForce;
@@ -54,18 +61,9 @@ public class ArduinoControls : BallController
         playerCam = Camera.main.transform.forward;
         //direction = new Vector3(playerCam.x, 0, playerCam.z);
 
-        if (xAccel >= 700)
-        {
-            if (xAccel >= maxForce * 4)
-            {
-                force = maxForce;
-            }
-            else
-            {
-                force = xAccel / 4;
-            }
-                
-            rb.AddRelativeForce(direction * force);
+        if (xAccel >= 700 || yAccel >= 700)
+        { 
+            rb.AddRelativeForce(arduinoForce);
             state = ballState.Hit;
         }
     }
@@ -88,7 +86,7 @@ public class ArduinoControls : BallController
         }
     }
 
-    protected void getArduinoValues()
+    private void getArduinoValues()
     {
         serialRead = serialPort.ReadLine();
         neededValues = serialRead.Split();
@@ -136,12 +134,35 @@ public class ArduinoControls : BallController
                 }
             }
         }
-        direction = new Vector3(xGyro, 0, zGyro);
+        SetForces();
+        //direction = new Vector3(xGyro, 0, zGyro);
         Debug.Log(xAccel + " " + yAccel + " " + zAccel + " " + xGyro + " " + yGyro + " " + zGyro);
     }
 
     private void FixedUpdate()
     {
         getArduinoValues();
+    }
+
+    private void SetForces()
+    {
+        if(xAccel >= maxForce * 4)
+        {
+            xForce = maxForce;
+        }
+        else
+        {
+            xForce = xAccel / 4;
+        }
+
+        if(yAccel >= maxForce * 4)
+        {
+            zForce = maxForce;
+        }
+        else
+        {
+            zForce = yAccel / 4;
+        }
+        arduinoForce = new Vector3(xForce, 0, zForce);
     }
 }
