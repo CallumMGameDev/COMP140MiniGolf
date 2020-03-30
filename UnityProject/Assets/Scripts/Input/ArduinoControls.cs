@@ -14,12 +14,6 @@ public class ArduinoControls : BallController
     private int yAccelOffset;
     [SerializeField]
     private int zAccelOffset;
-    [SerializeField]
-    private int xGyroOffset;
-    [SerializeField]
-    private int yGyroOffset;
-    [SerializeField]
-    private int zGyroOffset;
 
     private int xAccel;
     private int yAccel;
@@ -109,29 +103,15 @@ public class ArduinoControls : BallController
             }
             if (i == 3)
             {
-                if (result + xGyroOffset >= -25 || result + xGyroOffset <= 25)
-                {
-                    xGyro = 1;
-                }
-                else
-                {
-                    xGyro = result;
-                }
+                xGyro = result;
             }
             if (i == 4)
             {
-                yGyro = result + yGyroOffset;
+                yGyro = result;
             }
             if (i == 5)
             {
-                if (result + zGyroOffset >= -25 || result + zGyroOffset <= 25)
-                {
-                    zGyro = 0;
-                }
-                else
-                {
-                    zGyro = result;
-                }
+                zGyro = result;
             }
         }
         SetForces();
@@ -148,6 +128,10 @@ public class ArduinoControls : BallController
     {
         if(xAccel >= maxForce * 4)
         {
+            if(xAccel < 0)
+            {
+                xForce = 0;
+            }
             xForce = maxForce;
         }
         else
@@ -157,6 +141,10 @@ public class ArduinoControls : BallController
 
         if(yAccel >= maxForce * 4)
         {
+            if(yAccel < 0)
+            {
+                zForce = 0;
+            }
             zForce = maxForce;
         }
         else
