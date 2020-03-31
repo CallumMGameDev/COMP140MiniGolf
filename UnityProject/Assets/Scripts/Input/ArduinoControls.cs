@@ -132,7 +132,7 @@ public class ArduinoControls : BallController
                 zGyro = result;
             }
         }
-        SetForces();
+
         //direction = new Vector3(xGyro, 0, zGyro);
         Debug.Log(xAccel + " " + yAccel + " " + zAccel + " " + xGyro + " " + yGyro + " " + zGyro);
     }
@@ -143,6 +143,7 @@ public class ArduinoControls : BallController
     private void FixedUpdate()
     {
         getArduinoValues();
+        SetForces();
     }
 
     /// <summary>
@@ -154,28 +155,35 @@ public class ArduinoControls : BallController
     {
         if(xAccel >= maxForce * 4)
         {
-            if(xAccel < 0)
-            {
-                xForce = 0;
-            }
             xForce = maxForce;
         }
         else
         {
-            xForce = xAccel / 4;
+            if (xAccel <= 0)
+            {
+                xForce = 0;
+            }
+            else
+            {
+                xForce = xAccel / 4;
+            }
+            
         }
 
         if(yAccel >= maxForce * 4)
         {
-            if(yAccel < 0)
-            {
-                zForce = 0;
-            }
             zForce = maxForce;
         }
         else
         {
-            zForce = yAccel / 4;
+            if (yAccel <= 0)
+            {
+                zForce = 0;
+            }
+            else
+            {
+                zForce = yAccel / 4;
+            }
         }
         arduinoForce = new Vector3(xForce, 0, zForce);
     }

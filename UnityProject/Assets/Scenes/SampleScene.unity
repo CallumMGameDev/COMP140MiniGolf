@@ -312,7 +312,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &74877450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,8 +355,8 @@ MonoBehaviour:
   stokeCount: {fileID: 757293965}
   state: 0
   strokes: 0
-  xAccelOffset: -1178
-  yAccelOffset: -454
+  xAccelOffset: 10000
+  yAccelOffset: -2000
   zAccelOffset: 4226
   arduinoForce: {x: 0, y: 0, z: 0}
 --- !u!1 &86990662
@@ -1580,7 +1580,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 74877444}
   ballCamera: {fileID: 534669902}
-  controllerEnabled: 0
+  controllerEnabled: 1
 --- !u!4 &1935026524
 Transform:
   m_ObjectHideFlags: 0
