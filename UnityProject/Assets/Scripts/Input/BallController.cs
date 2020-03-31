@@ -34,7 +34,9 @@ public abstract class BallController : MonoBehaviour
     public int strokes;
     protected bool addStroke = true;
 
-
+    /// <summary>
+    /// Sets all the variables up that are nessasary for the ball to have basic functionality 
+    /// </summary>
     protected virtual void Start()
     {
         forceSlider.maxValue = maxForce;
@@ -44,6 +46,9 @@ public abstract class BallController : MonoBehaviour
         state = ballState.Stationary;
         stokeCount.SetText("Strokes " + strokes);
     }
+    /// <summary>
+    /// A basic way to switch between the state of the ball so that the ball can only be hit when its stationary
+    /// </summary>
     protected  virtual void Update()
     {
         switch (state)
@@ -69,6 +74,9 @@ public abstract class BallController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Checks if the ball has been hit and prevents the user from hitting the ball whilst its still moving
+    /// </summary>
     protected virtual void BallHit()
     {
         if (addStroke == true)

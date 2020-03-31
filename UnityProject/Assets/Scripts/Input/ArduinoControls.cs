@@ -26,14 +26,18 @@ public class ArduinoControls : BallController
     private float zForce;
     [SerializeField]
     private Vector3 arduinoForce;
-    private Vector3 maxArduinoForce;
 
     private string serialRead;
     private string[] neededValues;
     private int length;
+
+    /// <summary>
+    /// Sets up the serialport so that unity can read the values from the serialport
+    /// As well as doing the same set up as the BallController script 
+    /// This is because I am overiding the start function in order to add the arduino code 
+    /// </summary>
     protected override void Start()
     {
-        maxArduinoForce = new Vector3(maxForce, 0, 0);
         serialPort = new SerialPort("COM3", 38400);
         serialPort.Open();
         if (serialPort.IsOpen)
@@ -50,10 +54,14 @@ public class ArduinoControls : BallController
         state = ballState.Stationary;
         stokeCount.SetText("Strokes " + strokes);
     }
+
+    /// <summary>
+    /// checks if the acceleration is higher than a certain value before applying a force to the ball 
+    /// to prevent the ball being launched when the user has had no input
+    /// </summary>
     protected override void StationaryBall()
     {
         playerCam = Camera.main.transform.forward;
-        //direction = new Vector3(playerCam.x, 0, playerCam.z);
 
         if (xAccel >= 700 || yAccel >= 700)
         { 
@@ -62,6 +70,11 @@ public class ArduinoControls : BallController
         }
     }
 
+    /// <summary>
+    /// Checks if the ball is stationary
+    /// as well as checking if the acceleration is less than a specific value
+    /// to help reduce the ball being hit when the user doesn't have any input
+    /// </summary>
     protected override void BallHit()
     {
         
@@ -80,6 +93,11 @@ public class ArduinoControls : BallController
         }
     }
 
+    /// <summary>
+    /// Reads the values from the serial port 
+    /// This will then split each value up and convert them to a integer
+    /// Where they are then applied to the correct variable
+    /// </summary>
     private void getArduinoValues()
     {
         serialRead = serialPort.ReadLine();
@@ -119,11 +137,19 @@ public class ArduinoControls : BallController
         Debug.Log(xAccel + " " + yAccel + " " + zAccel + " " + xGyro + " " + yGyro + " " + zGyro);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void FixedUpdate()
     {
         getArduinoValues();
     }
 
+    /// <summary>
+    /// This will simply set the force to the value depending on the value read from the arduino
+    /// The values are being divided by for so that it is easier to get the lower values 
+    /// Otherwise in testing it would always be the max force applied
+    /// </summary>
     private void SetForces()
     {
         if(xAccel >= maxForce * 4)

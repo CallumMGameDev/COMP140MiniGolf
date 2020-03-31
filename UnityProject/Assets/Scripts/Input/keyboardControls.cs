@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class keyboardControls : BallController
 {
+    /// <summary>
+    /// Checks for when the left mouse button is held and calls the ForceApplied() function
+    /// When the left mouse button is raised the force will be applied to the ball
+    /// </summary>
     protected override void StationaryBall()
     {
         playerCam = Camera.main.transform.forward;
@@ -21,7 +25,9 @@ public class keyboardControls : BallController
             state = ballState.Hit;
         }
     }
-
+    /// <summary>
+    /// When called it will add an amount of force over time and reset the foce once it reaches the maximum force
+    /// </summary>
     protected override void ForceApplied()
     {
         if (force <= maxForce)

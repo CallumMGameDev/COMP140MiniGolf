@@ -12,6 +12,10 @@ public class CameraFollow : MonoBehaviour
     public float distance = 5f;
     public Quaternion rotation;
 
+    /// <summary>
+    /// simply checks if the right mouse button is held down
+    /// and allows the user to move the camera when using keyboard controls
+    /// </summary>
     private void Update()
     {
         if (Input.GetButton("Fire2"))
