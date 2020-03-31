@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform lookAt;
+    [SerializeField]
+    private GameObject ball;
 
     private Vector3 currentMouse;
     private Vector3 cursorDirection;
@@ -18,21 +19,24 @@ public class CameraFollow : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (Input.GetButton("Fire2"))
+        if(ball != null)
         {
-            if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+            if (Input.GetButton("Fire2"))
             {
-                currentMouse.x += Input.GetAxis("Mouse X") * sensitivity;
-                currentMouse.y -= Input.GetAxis("Mouse Y") * sensitivity;
+                if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+                {
+                    currentMouse.x += Input.GetAxis("Mouse X") * sensitivity;
+                    currentMouse.y -= Input.GetAxis("Mouse Y") * sensitivity;
 
-                cursorDirection = lookAt.position - transform.position;
+                    cursorDirection = ball.transform.position - transform.position;
 
-                currentMouse.y = Mathf.Clamp(currentMouse.y, 0f, 90f);
+                    currentMouse.y = Mathf.Clamp(currentMouse.y, 0f, 90f);
 
-                rotation = Quaternion.Euler(currentMouse.y, currentMouse.x, 0);
+                    rotation = Quaternion.Euler(currentMouse.y, currentMouse.x, 0);
+                }
             }
+            transform.position = ball.transform.position - rotation * (Vector3.forward * distance);
+            transform.rotation = rotation;
         }
-        transform.position = lookAt.position - rotation * (Vector3.forward * distance);
-        transform.rotation = rotation;
     }
 }
