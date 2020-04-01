@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.IO.Ports;
 using UnityEngine;
-using System.IO.Ports;
-using System;
-using System.Collections;
 
 
 public class ArduinoControls : BallController
@@ -16,8 +13,8 @@ public class ArduinoControls : BallController
     private int zAccelOffset;
 
     private int xAccel;
-    private int yAccel;
     private int zAccel;
+    private int yAccel;
     private int xGyro;
     private int yGyro;
     private int zGyro;
@@ -46,7 +43,8 @@ public class ArduinoControls : BallController
         }
 
         serialPort.ReadTimeout = 500;
-
+        xForce = 0;
+        zForce = 0;
         forceSlider.maxValue = maxForce;
         forceSlider.minValue = minForce;
         force = minForce;
@@ -63,7 +61,7 @@ public class ArduinoControls : BallController
     {
         playerCam = Camera.main.transform.forward;
 
-        if (xAccel >= 700 || yAccel >= 700)
+        if (xAccel >= 700 || zAccel >= 700)
         { 
             rb.AddRelativeForce(arduinoForce);
             state = ballState.Hit;
@@ -86,7 +84,7 @@ public class ArduinoControls : BallController
         }
         if (rb.velocity == Vector3.zero )
         {
-            if (xAccel <= -800)
+            if (xAccel <= -800 && zAccel <= -800)
             {
                 state = ballState.Stationary;
             }
@@ -113,11 +111,11 @@ public class ArduinoControls : BallController
             }
             if (i == 1)
             {
-                yAccel = result + yAccelOffset;
+                zAccel = result + yAccelOffset;
             }
             if (i == 2)
             {
-                zAccel = result + zAccelOffset;
+                yAccel = result + zAccelOffset;
             }
             if (i == 3)
             {
@@ -134,7 +132,7 @@ public class ArduinoControls : BallController
         }
 
         //direction = new Vector3(xGyro, 0, zGyro);
-        Debug.Log(xAccel + " " + yAccel + " " + zAccel + " " + xGyro + " " + yGyro + " " + zGyro);
+        Debug.Log(xAccel + " " + zAccel + " " + yAccel + " " + xGyro + " " + yGyro + " " + zGyro);
     }
 
     /// <summary>
@@ -170,19 +168,20 @@ public class ArduinoControls : BallController
             
         }
 
-        if(yAccel >= maxForce * 4)
+        if(zAccel >= maxForce * 4)
         {
             zForce = maxForce;
         }
         else
         {
-            if (yAccel <= 0)
+            if (zAccel <= 0)
             {
                 zForce = 0;
             }
             else
             {
-                zForce = yAccel / 4;
+                zForce = zAccel / 4;
+
             }
         }
         arduinoForce = new Vector3(xForce, 0, zForce);

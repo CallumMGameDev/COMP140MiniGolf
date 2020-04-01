@@ -355,8 +355,8 @@ MonoBehaviour:
   stokeCount: {fileID: 757293965}
   state: 0
   strokes: 0
-  xAccelOffset: 10000
-  yAccelOffset: -2000
+  xAccelOffset: 12000
+  yAccelOffset: -3000
   zAccelOffset: 4226
   arduinoForce: {x: 0, y: 0, z: 0}
 --- !u!1 &86990662
